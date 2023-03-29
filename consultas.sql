@@ -22,3 +22,9 @@ from produto join atribuicao using (codp) join pedido using (codpe) join enderec
 where produto.preco = (select max(produto.preco)
 					   from produto
 						);
+						
+select produto.nome
+from produto
+where codp in (select codp
+			  from cliente join avaliacao using (codc) join produto using (codp) join vendedor using (codv)
+			  where cliente.nacionalidade = 'Brasileiro' and vendedor.nacionalidade = 'Brasileiro')
