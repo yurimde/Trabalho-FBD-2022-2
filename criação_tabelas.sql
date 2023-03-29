@@ -9,6 +9,7 @@ drop table if exists atribuicao;
 drop table if exists avaliacao;
 
 
+
 create table usuario(
 	email	varchar(20) not null,
 	nome	varchar(25) not null,
