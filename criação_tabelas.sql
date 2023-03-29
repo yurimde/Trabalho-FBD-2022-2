@@ -69,7 +69,7 @@ create table produto
  dataL		date not null,
  nota		float,
  codv		char(3) not null,
- FOREIGN KEY (codv) REFERENCES vendedor(codv);
+ FOREIGN KEY (codv) REFERENCES vendedor(codv)
 );
  
 create table avaliacao
@@ -114,14 +114,14 @@ insert into endereco values
 ('3','Estados Unidos','NW','Nova Iorque','5ª avenue','789','Avengers','3');
 
 insert into pedido values
-('1',null,'2023-5-10', 5, '1','1'),
-('2','2023-6-10','2023-5-25', 3, '2','2'),
-('3',null,'2023-7-10', 4, '3','3');
+('1',null,'2023-5-10', 5, '1','1','1'),
+('2','2023-6-10','2023-5-25', 3, '2','2','2'),
+('3',null,'2023-7-10', 4, '3','3','3');
 
 insert into produto values
-('1','Monitor LED',500,'Monitor LED 19 polegadas', '2022-02-25', 4.5),
-('2','Reator fusão', 77777777,'Reator de fusão nuclear para naves de hiperespaço','1969-07-31',9.999),
-('3','Reator Arc', 12, 'Reator arc do tony stark', '2011-01-01', 12);
+('1','Monitor LED',500,'Monitor LED 19 polegadas', '2022-02-25', 4.5,'1'),
+('2','Reator fusão', 77777777,'Reator de fusão nuclear para naves de hiperespaço','1969-07-31',9.999,'2'),
+('3','Reator Arc', 12, 'Reator arc do tony stark', '2011-01-01', 12,'3');
 
 insert into avaliacao values
 (4.5,'Monitor de excelente custo benefício','1','1'),
@@ -133,15 +133,7 @@ insert into atribuicao values
 (333,'2','2'),
 (42,'3','3');
 
-insert into aquisicao values
-('1','1'),
-('2','2'),
-('3','3');
 
-insert into cadastro values
-('1','1'),
-('2','2'),
-('3','3');
 
 SELECT * FROM cliente;
 SELECT * FROM vendedor;
@@ -151,7 +143,6 @@ select * from pedido;
 select * from produto;
 select * from avaliacao;
 select * from atribuicao;
-select * from aquisicao;
-select * from cadastro;
+
 
 
