@@ -7,8 +7,7 @@ drop table if exists pedido;
 drop table if exists endereco;
 drop table if exists atribuicao;
 drop table if exists avaliacao;
-drop table if exists cadastro;
-drop table if exists aquisicao;
+
 
 create table usuario(
 	email	varchar(20) not null,
@@ -55,8 +54,10 @@ create table pedido(
 	nota		float,
 	code		char(3) not null,
 	codca		char(3) not null,
+	codc		char(3) not null,
 	FOREIGN KEY (code) REFERENCES endereco(code),
-	FOREIGN KEY (codca) REFERENCES cartao(codca)
+	FOREIGN KEY (codca) REFERENCES cartao(codca),
+	FOREIGN KEY (codc) REFERENCES cliente(codc)
  );
 
 
@@ -66,7 +67,9 @@ create table produto
  preco		decimal not null,
  descricao	text not null,
  dataL		date not null,
- nota		float
+ nota		float,
+ codv		char(3) not null,
+ FOREIGN KEY (codv) REFERENCES vendedor(codv);
 );
  
 create table avaliacao
@@ -86,20 +89,9 @@ create table atribuicao
  FOREIGN KEY (codp) REFERENCES produto (codp)
  );
  
- create table aquisicao(
- 	codc 	char(3) NOT NULL,
-	codpe	char(3) NOT NULL,
-	FOREIGN KEY (codc) references cliente (codc),
-	FOREIGN KEY (codpe) references pedido (codpe)
- );
  
  
- create table cadastro(
- 	codp char(3) not null,
-	codv char(3) not null,
-	FOREIGN KEY (codp) REFERENCES produto(codp),
-	FOREIGN KEY (codv) REFERENCES vendedor(codv)
- );
+ 
  
 insert into cliente(codc, email, nome, senha, nacionalidade, cpf) values
 ('1', 'yurimde@gmail.com','Yuri Vargas','12345678','Brasileiro','11122233344'),
@@ -161,6 +153,5 @@ select * from avaliacao;
 select * from atribuicao;
 select * from aquisicao;
 select * from cadastro;
-select
-from cartao join cliente on (cliente_id = cliente.id)
+
 
