@@ -15,3 +15,10 @@ select produto.nome, count(*) numVezesPedidas
 from produto join atribuicao using (codp) join pedido using (codpe)
 where produto.preco >= 500
 group by produto.nome
+
+-- Exibe o nome dos produtos que tem o valor máximo, e onde foi feito o pedido de sua compra
+select produto.nome, produto.preco, cidade, uf
+from produto join atribuicao using (codp) join pedido using (codpe) join endereco using (code)
+where produto.preco = (select max(produto.preco)
+					   from produto
+						);
