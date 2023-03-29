@@ -5,4 +5,7 @@ create view clientesBrasil as
 
 select * from clientesBrasil
 
--- Consulta número de pedidos 
+-- Exibe os pedidos feitos por clientes no brasil, o local onde foi feito o pedido e o número de produtos no pedido
+select clientesBrasil.nome, cidade, uf, produto.nome
+from clientesBrasil join pedido using (codc) join atribuicao using (codpe) join produto using (codp)
+
