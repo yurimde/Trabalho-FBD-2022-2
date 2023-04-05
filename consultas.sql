@@ -67,4 +67,26 @@ SELECT cliente.nome,produto.nome from pedido join cliente using (codc) join ende
 WHERE endereco.pais = 'Brasil' and (Not vendedor.nacionalidade = 'Brasileiro') AND (quant > 100)
 group by produto.nome,cliente.nome
 
-
+--Lista quantidade entrada de produtos mais vendidos de um ano e um mês entrados pelo usuário
+DROP FUNCTION IF EXISTS listar_produtos_mais_vendidos(INT, INT, INT);
+CREATE OR REPLACE FUNCTION listar_produtos_mais_vendidos(
+    p_mes INT,
+    p_ano INT,
+    p_limit INT
+)
+RETURNS TABLE (codp CHAR(3), nome VARCHAR(20), total_vendido BIGINT) AS
+$$
+BEGIN
+    RETURN QUERY
+    SELECT p.codp, p.nome, SUM(a.quant) AS total_vendido
+    FROM produto p
+    JOIN atribuicao a ON p.codp = a.codp
+    JOIN pedido pe ON a.codpe = pe.codpe
+    WHERE EXTRACT(MONTH FROM pe.dPedido) = p_mes
+      AND EXTRACT(YEAR FROM pe.dPedido) = p_ano
+    GROUP BY p.codp, p.nome
+    ORDER BY total_vendido DESC
+    LIMIT p_limit;
+END;
+$$
+LANGUAGE plpgsql;
