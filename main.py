@@ -15,6 +15,8 @@ conn = psycopg2.connect(conn_string)
 
 cursor = conn.cursor()
 
+cursor.execute("SELECT * FROM listar_produtos_mais_vendidos(5,2023,3);")
+
 queries = []
 file = open('consultas.sql','r')
 fullquery = ''
