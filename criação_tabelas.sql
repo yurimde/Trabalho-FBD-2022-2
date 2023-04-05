@@ -90,9 +90,32 @@ create table atribuicao
  FOREIGN KEY (codp) REFERENCES produto (codp)
  );
  
+CREATE TRIGGER tg_avoid_negative_price
+BEFORE INSERT ON produto
+FOR EACH ROW
+EXECUTE FUNCTION avoid_negative_price();
  
- 
- 
+CREATE OR REPLACE FUNCTION listar_produtos_mais_vendidos(
+    p_mes INT,
+    p_ano INT,
+    p_limit INT
+)
+RETURNS TABLE (codp CHAR(3), nome VARCHAR(20), total_vendido INTEGER) AS
+$$
+BEGIN
+    RETURN QUERY
+    SELECT p.codp, p.nome, SUM(a.quant) AS total_vendido
+    FROM produto p
+    JOIN atribuicao a ON p.codp = a.codp
+    JOIN pedido pe ON a.codpe = pe.codpe
+    WHERE EXTRACT(MONTH FROM pe.dPedido) = p_mes
+      AND EXTRACT(YEAR FROM pe.dPedido) = p_ano
+    GROUP BY p.codp, p.nome
+    ORDER BY total_vendido DESC
+    LIMIT p_limit;
+END;
+$$
+LANGUAGE plpgsql;
  
 insert into cliente(codc, email, nome, senha, nacionalidade, cpf) values
 ('1', 'yurimde@gmail.com','Yuri Vargas','12345678','Brasileiro','11122233344'),
